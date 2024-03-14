@@ -1,12 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 
+function Submit({title}) {
+    const status = useFormStatus();
+    return <Button type="submit" disabled={status.pending} aria-disabled={status.pending}>{title}</Button>
+  }
+  
 export default function UpdateForm({ formAction, initialData }: any) {
   const [formState, action] = useFormState(formAction, {
     errors: {},
   });
+  const status = useFormStatus();
 
   return (
     <form action={action}>
@@ -31,7 +37,7 @@ export default function UpdateForm({ formAction, initialData }: any) {
         )}
       </div>
       <div className="flex items-center justify-between">
-        <Button type="submit">Save</Button>
+        <Submit title="Update"/>
       </div>
     </form>
   );
