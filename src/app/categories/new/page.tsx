@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -46,12 +47,11 @@ const page = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <button
-              className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            <Button
               type="submit"
             >
               Save
-            </button>
+            </Button>
           </div>
         </form>
       </div>
