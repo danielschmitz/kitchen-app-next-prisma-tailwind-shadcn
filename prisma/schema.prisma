@@ -5,6 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 // npx prisma db push   //to create db
+// npm i -g prisma 
+// prisma studio //studio app
 
 generator client {
   provider = "prisma-client-js"
