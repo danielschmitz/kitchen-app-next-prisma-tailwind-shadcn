@@ -1,3 +1,4 @@
+import Submit from "@/components/Submit";
 import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
@@ -46,11 +47,7 @@ const page = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <Button
-              type="submit"
-            >
-              Save
-            </Button>
+           <Submit>Save</Submit>
           </div>
         </form>
       </div>
