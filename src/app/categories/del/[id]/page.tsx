@@ -1,3 +1,4 @@
+import Submit from "@/components/Submit";
 import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
@@ -29,7 +30,8 @@ const page = async ({ params }: { params: { id: string } }) => {
           <input type="hidden" name="id" defaultValue={category.id} />
 
           <div className="flex items-center justify-between">
-            <Button type="submit">Confirm Delete '{category.name}' ?</Button>
+            {/* <Button type="submit">Confirm Delete '{category.name}' ?</Button> */}
+            <Submit>Confirm Delete {category.name} ?</Submit>
           </div>
         </form>
       </div>
