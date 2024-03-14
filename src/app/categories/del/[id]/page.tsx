@@ -1,0 +1,40 @@
+import { Button } from "@/components/ui/button";
+import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { number } from "zod";
+
+const page = async ({ params }: { params: { id: string } }) => {
+  async function saveCategory(formData: FormData) {
+    "use server";
+    const formObject = Object.fromEntries(formData);
+    const prisma = new PrismaClient();
+    await prisma.category.delete({
+      where: { id: parseInt(formObject.id as string) },
+    });
+    redirect("/categories");
+  }
+
+  const id = parseInt(params.id);
+  const prisma = new PrismaClient();
+  const category = await prisma.category.findFirstOrThrow({ where: { id } });
+
+  return (
+    <div>
+      <div className="flex flex-row w-full">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          action={saveCategory}
+        >
+          <input type="hidden" name="id" defaultValue={category.id} />
+
+          <div className="flex items-center justify-between">
+            <Button type="submit">Confirm Delete '{category.name}' ?</Button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default page;

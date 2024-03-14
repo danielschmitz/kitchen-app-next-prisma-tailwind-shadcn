@@ -41,7 +41,7 @@ const page = async () => {
               <TableRow>
                 <TableHead className="w-[100px]">Id</TableHead>
                 <TableHead>Name</TableHead>
-                <TableHead className="w-[100px]">Actions</TableHead>
+                <TableHead className="w-[100px] text-center">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -50,9 +50,18 @@ const page = async () => {
                   <TableCell className="font-medium">{category.id}</TableCell>
                   <TableCell>{category.name}</TableCell>
                   <TableCell className="text-right">
-                    <Button asChild variant="link">
-                      <Link href={`/categories/edit/${category.id}`}>Edit</Link>
-                    </Button>
+                    <div className="flex flex-row gap-2">
+                      <Button asChild variant="link">
+                        <Link href={`/categories/edit/${category.id}`}>
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button asChild variant="link">
+                        <Link href={`/categories/del/${category.id}`}>
+                          Delete
+                        </Link>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
