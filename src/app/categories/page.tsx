@@ -29,51 +29,38 @@ const page = async () => {
   const data = await getData();
   return (
     <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Categories</CardTitle>
-          <CardDescription>List Categories</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableCaption>A list of your categories.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Id</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead className="w-[100px] text-center">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.map((category) => (
-                <TableRow key={category.id}>
-                  <TableCell className="font-medium">{category.id}</TableCell>
-                  <TableCell>{category.name}</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex flex-row gap-2">
-                      <Button asChild variant="link">
-                        <Link href={`/categories/edit/${category.id}`}>
-                          Edit
-                        </Link>
-                      </Button>
-                      <Button asChild variant="link">
-                        <Link href={`/categories/del/${category.id}`}>
-                          Delete
-                        </Link>
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-        <CardFooter>
-          <Button asChild>
-            <Link href="/categories/new">New Category</Link>
-          </Button>
-        </CardFooter>
-      </Card>
+      <Table>
+        <TableCaption>A list of your categories.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[100px]">Id</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead className="w-[100px] text-center">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((category) => (
+            <TableRow key={category.id}>
+              <TableCell className="font-medium">{category.id}</TableCell>
+              <TableCell>{category.name}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex flex-row gap-2">
+                  <Button asChild variant="link">
+                    <Link href={`/categories/edit/${category.id}`}>Edit</Link>
+                  </Button>
+                  <Button asChild variant="link">
+                    <Link href={`/categories/del/${category.id}`}>Delete</Link>
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      <Button asChild>
+        <Link href="/categories/new">New Category</Link>
+      </Button>
     </div>
   );
 };

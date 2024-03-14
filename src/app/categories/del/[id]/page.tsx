@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     <div>
       <div className="flex flex-row w-full">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className=""
           action={saveCategory}
         >
           <input type="hidden" name="id" defaultValue={category.id} />
