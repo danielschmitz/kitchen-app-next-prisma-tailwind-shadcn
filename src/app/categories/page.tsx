@@ -10,6 +10,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const getData = async (): Promise<Category[]> => {
   const prisma = new PrismaClient();
@@ -26,22 +35,34 @@ const page = async () => {
           <CardDescription>List Categories</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>
-            <ul>
+          <Table>
+            <TableCaption>A list of your categories.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Id</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="w-[100px]">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {data.map((category) => (
-                <li key={category.id}>
-                  <Link href={`/categories/${category.id}`}>
-                    {category.name}
-                  </Link>
-                </li>
+                <TableRow key={category.id}>
+                  <TableCell className="font-medium">{category.id}</TableCell>
+                  <TableCell>{category.name}</TableCell>
+                  <TableCell className="text-right">
+                    <Button asChild variant="link">
+                      <Link href={`/categories/edit/${category.id}`}>Edit</Link>
+                    </Button>
+                  </TableCell>
+                </TableRow>
               ))}
-            </ul>
-          </p>
+            </TableBody>
+          </Table>
         </CardContent>
         <CardFooter>
-          <Link href="/categories/new">
-            <Button>create new</Button>
-          </Link>
+          <Button asChild>
+            <Link href="/categories/new">New Category</Link>
+          </Button>
         </CardFooter>
       </Card>
     </div>

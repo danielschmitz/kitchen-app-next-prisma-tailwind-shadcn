@@ -5,7 +5,6 @@ const page = ({
 }>) => {
   return (
     <>
-      <h2>Categories</h2>
       <div>{children}</div>
     </>
   );
