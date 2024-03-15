@@ -8,8 +8,11 @@ export default async function Page() {
     async function createProduct(formData: FormData) {
         'use server'
         console.log(formData)
-        redirect('/products')
         
+        // return { error: 'Error from server'}
+
+        redirect('/products')
+       
     }
 
     const categories = await  prisma.category.findMany()

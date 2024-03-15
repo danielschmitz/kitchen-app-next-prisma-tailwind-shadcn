@@ -18,23 +18,23 @@ datasource db {
 }
 
 model Category {
-  id       Int      @id @default(autoincrement())
+  id       String  @id @default(cuid())
   name     String
   products Product[]
 }
 
 model Product {
-  id          Int        @id @default(autoincrement())
+  id  String  @id @default(cuid())
   name        String
   supplier    String
-  categoryId  Int
+  categoryId  String
   category    Category   @relation(fields: [categoryId], references: [id])
   stock       Stock[]
 }
 
 model Stock {
-  id          Int      @id @default(autoincrement())
-  productId   Int
+  id  String  @id @default(cuid())
+  productId   String
   price       String
   expires     DateTime
   added       DateTime @default(now())

@@ -33,7 +33,6 @@ const page = async () => {
         <TableCaption>A list of your categories.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Id</TableHead>
             <TableHead>Name</TableHead>
             <TableHead className="w-[100px] text-center">Actions</TableHead>
           </TableRow>
@@ -41,7 +40,6 @@ const page = async () => {
         <TableBody>
           {data.map((category) => (
             <TableRow key={category.id}>
-              <TableCell className="font-medium">{category.id}</TableCell>
               <TableCell>{category.name}</TableCell>
               <TableCell className="text-right">
                 <div className="flex flex-row gap-2">

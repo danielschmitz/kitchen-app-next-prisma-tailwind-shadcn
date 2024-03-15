@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -15,8 +15,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-import { useFormStatus } from "react-dom";
+import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface UpdateFormProps {
   formAction: any;
@@ -33,6 +39,7 @@ const FormSchema = z.object({
     .max(50, {
       message: "name must be less than 50 characters.",
     }),
+  categoryId: z.string()
 });
 
 export default function ProductForm({
@@ -43,13 +50,19 @@ export default function ProductForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
-    }
+    },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    formAction(data);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsSubmitting(true);
+    const result = await formAction(data);
+    if (result?.error) {
+      setIsSubmitting(false);
+      setErrorMessage(result.error);
+    }
   }
-
   return (
     <Form {...form}>
       <div className="text-md mb-5">Create product</div>
@@ -58,6 +71,11 @@ export default function ProductForm({
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full space-y-6"
         >
+          {errorMessage && (
+            <div className="text-black rounded-md p-2 bg-red-200">
+              {errorMessage}
+            </div>
+          )}
           <FormField
             control={form.control}
             name="name"
@@ -72,8 +90,35 @@ export default function ProductForm({
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories.map((category:any) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : "Save"}
           </Button>
         </form>
       </div>
