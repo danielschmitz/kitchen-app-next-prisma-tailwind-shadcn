@@ -21,16 +21,16 @@ const page = async ({ params }: { params: { id: string } }) => {
     // mutate data
     const prisma = new PrismaClient();
     await prisma.category.update({
-      where: { id: parseInt(id as string) },
+      where: { id: id as string },
       data: { name: name as string },
     });
 
     redirect("/categories");
   }
 
-  const  id  = parseInt(params.id);
+  const  id  = params.id;
   const prisma = new PrismaClient();
-  const category = await prisma.category.findFirstOrThrow({ where: { id } });
+  const category = await prisma.category.findUnique({ where: { id } });
 
   return (
     <div>

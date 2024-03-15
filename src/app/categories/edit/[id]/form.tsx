@@ -8,17 +8,14 @@ interface FormErrors {
   name?: string;
 }
 
-// FormState interface
 interface FormState {
   errors: FormErrors;
 }
 
-// Define the props that the PostForm component expects
 interface UpdateFormProps {
-  formAction: any; // The action to perform when the form is submitted
+  formAction: any; 
   initialData: {
-    // The initial data for the form fields
-    id: number;
+    id: string;
     name: string;
   };
 }

@@ -1,27 +1,16 @@
+"use server";
+
 import { PrismaClient } from "@prisma/client";
 import ProductForm from "./productform";
 import { redirect } from "next/navigation";
 
-
 export default async function Page() {
-    const prisma = new PrismaClient()
-    async function createProduct(formData: FormData) {
-        'use server'
-        console.log(formData)
-        
-        // return { error: 'Error from server'}
+  const prisma = new PrismaClient();
+  const categories = await prisma.category.findMany();
 
-        redirect('/products')
-       
-    }
-
-    const categories = await  prisma.category.findMany()
-
-    return (
-        <div>
-            <ProductForm formAction={createProduct}  categories={categories} />
-        </div>
-    );
+  return (
+    <div>
+      <ProductForm categories={categories} />
+    </div>
+  );
 }
-
-
