@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Topheader from "@/components/Topheader";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,6 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Topheader title="Kicthen's Next App"></Topheader>
         <div className="px-5 py-2">{children}</div>
+        <Toaster />
       </body>
     </html>
   );
