@@ -22,12 +22,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CreateProduct, RedirectTo } from "@/app/actions";
-import { useRouter } from "next/navigation";
+
 
 interface UpdateFormProps {
   categories?: any;
   initialData?: any;
+  action:any
 }
 
 const FormSchema = z.object({
@@ -43,19 +43,22 @@ const FormSchema = z.object({
   categoryId: z.string(),
 });
 
-export default function ProductForm({ categories }: UpdateFormProps) {
+export default function ProductForm({ categories, initialData, action }: UpdateFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
+      name: initialData?.name,
+      supplier: initialData?.supplier,
+      categoryId: initialData?.categoryId
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsSubmitting(true);
-    await CreateProduct(data);
-    await RedirectTo("/products");
+    if (action) {
+      await action(data);
+    }
     setIsSubmitting(false);
   }
   return (
@@ -99,7 +102,7 @@ export default function ProductForm({ categories }: UpdateFormProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} {...field}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a category" />
