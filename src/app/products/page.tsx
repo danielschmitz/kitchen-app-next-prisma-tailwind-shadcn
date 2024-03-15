@@ -19,12 +19,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { MoreHorizontal } from "lucide-react";
 
 export default async function page() {
-
   const prisma = new PrismaClient();
-  const products = await prisma.product.findMany({include: {category: true}});
-  
+  const products = await prisma.product.findMany({
+    include: { category: true },
+  });
+
   return (
     <div>
       <Table>
@@ -41,14 +51,30 @@ export default async function page() {
             <TableRow key={product.id}>
               <TableCell className="w-full">{product.name}</TableCell>
               <TableCell>{product.category.name}</TableCell>
-              <TableCell className="text-right">
-                <div className="flex flex-row gap-2">
+              <TableCell className="text-center">
+              <div className="hidden md:flex flex-row gap-2">
                   <Button asChild variant="link">
                     <Link href={`/products/edit/${product.id}`}>Edit</Link>
                   </Button>
                   <Button asChild variant="link">
                     <Link href={`/products/del/${product.id}`}>Delete</Link>
                   </Button>
+                </div>
+                <div className="md:hidden">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem><Link href={`/products/edit/${product.id}`}>Edit</Link></DropdownMenuItem>
+                      <DropdownMenuItem><Link href={`/products/del/${product.id}`}>Delete</Link></DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </TableCell>
             </TableRow>
@@ -61,4 +87,4 @@ export default async function page() {
       </Button>
     </div>
   );
-};
+}
