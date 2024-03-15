@@ -1,14 +1,6 @@
 import { Category, PrismaClient } from "@prisma/client";
 import Link from "next/link";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -20,13 +12,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export const getData = async (): Promise<Category[]> => {
-  const prisma = new PrismaClient();
-  return await prisma.category.findMany();
-};
+export default async function page()  {
 
-const page = async () => {
-  const data = await getData();
+  const prisma = new PrismaClient();
+  const categories = await prisma.category.findMany();
+
   return (
     <div>
       <Table>
@@ -38,7 +28,7 @@ const page = async () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((category) => (
+          {categories.map((category) => (
             <TableRow key={category.id}>
               <TableCell>{category.name}</TableCell>
               <TableCell className="text-right">
@@ -62,5 +52,3 @@ const page = async () => {
     </div>
   );
 };
-
-export default page;

@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const prisma = new PrismaClient();
   const categories = await prisma.category.findMany();
   const  id  = params.id;
-  const product = await prisma.product.findUnique({ where: { id } });
+  const product = await prisma.product.findUniqueOrThrow({ where: { id } });
 
   async function UpdateAction(data: any) {
     "use server"
@@ -16,7 +16,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     await prisma.product.update({ where: { id }, data })
     redirect("/products")
   }
-
 
   return (
     <div>

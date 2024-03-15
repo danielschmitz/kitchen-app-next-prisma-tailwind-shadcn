@@ -2,20 +2,20 @@ import Submit from "@/components/Submit";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-const page = async ({ params }: { params: { id: string } }) => {
+export default async function page ({ params }: { params: { id: string } }) {
   async function saveCategory(formData: FormData) {
     "use server";
     const formObject = Object.fromEntries(formData);
     const prisma = new PrismaClient();
     await prisma.category.delete({
-      where: { id: parseInt(formObject.id as string) },
+      where: { id: formObject.id as string },
     });
     redirect("/categories");
   }
 
-  const id = parseInt(params.id);
+  const id = params.id;
   const prisma = new PrismaClient();
-  const category = await prisma.category.findFirstOrThrow({ where: { id } });
+  const category = await prisma.category.findUniqueOrThrow({ where: { id } });
 
   return (
     <div>
@@ -36,4 +36,3 @@ const page = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;

@@ -20,29 +20,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export const getData = async (): Promise<Product[]> => {
-  const prisma = new PrismaClient();
-  return await prisma.product.findMany();
-};
+export default async function page() {
 
-const page = async () => {
-  const data = await getData();
+  const prisma = new PrismaClient();
+  const products = await prisma.product.findMany({include: {category: true}});
+  
   return (
     <div>
       <Table>
         <TableCaption>A list of your products.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Id</TableHead>
             <TableHead>Name</TableHead>
+            <TableHead>Category</TableHead>
             <TableHead className="w-[100px] text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((product) => (
+          {products.map((product) => (
             <TableRow key={product.id}>
-              <TableCell className="font-medium">{product.id}</TableCell>
-              <TableCell>{product.name}</TableCell>
+              <TableCell className="w-full">{product.name}</TableCell>
+              <TableCell>{product.category.name}</TableCell>
               <TableCell className="text-right">
                 <div className="flex flex-row gap-2">
                   <Button asChild variant="link">
@@ -64,5 +62,3 @@ const page = async () => {
     </div>
   );
 };
-
-export default page;

@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import UpdateForm from "./form";
 
-const page = async ({ params }: { params: { id: string } }) => {
+export default async function page ({ params }: { params: { id: string } }) {
   async function saveCategory(formState: any, formData: FormData) {
     "use server";
     
@@ -30,7 +30,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   const  id  = params.id;
   const prisma = new PrismaClient();
-  const category = await prisma.category.findUnique({ where: { id } });
+  const category = await prisma.category.findUniqueOrThrow({ where: { id } });
 
   return (
     <div>
@@ -41,4 +41,3 @@ const page = async ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;

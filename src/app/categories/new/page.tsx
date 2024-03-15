@@ -1,29 +1,21 @@
 import Submit from "@/components/Submit";
-import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const page = () => {
+export default async function page() {
   async function createCategory(formData: FormData) {
     "use server";
 
     const formObject = Object.fromEntries(formData);
 
-    // validate data
     if (!formObject.name) {
       throw new Error("Name is required");
     }
 
-    // mutate data
     const prisma = new PrismaClient();
     await prisma.category.create({data:{name:formObject.name as string}})
-
-    // revalidate cache
-
-    // redirect
+    
     redirect('/categories')
-
   }
   return (
     <div>
@@ -54,5 +46,3 @@ const page = () => {
     </div>
   );
 };
-
-export default page;
