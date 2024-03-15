@@ -1,17 +1,32 @@
 "use client";
 
 import Submit from "@/components/Submit";
-import { Button } from "@/components/ui/button";
 import { useFormState, useFormStatus } from "react-dom";
 
+// Form Errors interface
+interface FormErrors {
+  name?: string,
+}
 
-  
-export default function UpdateForm({ formAction, initialData }: any) {
-  const [formState, action] = useFormState(formAction, {
+// FormState interface
+interface FormState {
+  errors: FormErrors
+}
+
+// Define the props that the PostForm component expects
+interface UpdateFormProps {
+  formAction: any, // The action to perform when the form is submitted
+  initialData: { // The initial data for the form fields
+      id: number,
+      name: string
+  },
+}
+
+export default function UpdateForm({ formAction, initialData }: UpdateFormProps) {
+  const [formState, action] = useFormState<FormState>(formAction, {
     errors: {},
   });
-  const status = useFormStatus();
-
+  
   return (
     <form action={action}>
       <input type="hidden" name="id" defaultValue={initialData.id} />
