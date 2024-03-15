@@ -1,14 +1,7 @@
-import { product, PrismaClient, Product } from "@prisma/client";
-import Link from "next/link";
+"use server";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -26,14 +19,25 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { redirect } from "next/navigation";
+import DeleteDialog from "./DeleteDialog";
+import { FindProducts } from "./actions";
 
 export default async function page() {
-  const prisma = new PrismaClient();
-  const products = await prisma.product.findMany({
-    include: { category: true },
-  });
+  const products =  await FindProducts()
 
   return (
     <div>
@@ -52,13 +56,11 @@ export default async function page() {
               <TableCell className="w-full">{product.name}</TableCell>
               <TableCell>{product.category.name}</TableCell>
               <TableCell className="text-center">
-              <div className="hidden md:flex flex-row gap-2">
-                  <Button asChild variant="link">
+                <div className="hidden md:flex flex-row gap-2">
+                  <Button asChild variant="ghost">
                     <Link href={`/products/edit/${product.id}`}>Edit</Link>
                   </Button>
-                  <Button asChild variant="link">
-                    <Link href={`/products/del/${product.id}`}>Delete</Link>
-                  </Button>
+                  <DeleteDialog product={product} />
                 </div>
                 <div className="md:hidden">
                   <DropdownMenu>
@@ -71,8 +73,10 @@ export default async function page() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem><Link href={`/products/edit/${product.id}`}>Edit</Link></DropdownMenuItem>
-                      <DropdownMenuItem><Link href={`/products/del/${product.id}`}>Delete</Link></DropdownMenuItem>
+                      <Button variant={"ghost"}>
+                        <Link href={`/products/edit/${product.id}`}>Edit</Link>
+                      </Button>
+                      <DeleteDialog product={product} />
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
