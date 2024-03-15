@@ -1,9 +1,6 @@
 import Submit from "@/components/Submit";
-import { Button } from "@/components/ui/button";
 import { PrismaClient } from "@prisma/client";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { number } from "zod";
 
 const page = async ({ params }: { params: { id: string } }) => {
   async function saveCategory(formData: FormData) {
