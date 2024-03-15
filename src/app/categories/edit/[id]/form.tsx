@@ -5,28 +5,32 @@ import { useFormState, useFormStatus } from "react-dom";
 
 // Form Errors interface
 interface FormErrors {
-  name?: string,
+  name?: string;
 }
 
 // FormState interface
 interface FormState {
-  errors: FormErrors
+  errors: FormErrors;
 }
 
 // Define the props that the PostForm component expects
 interface UpdateFormProps {
-  formAction: any, // The action to perform when the form is submitted
-  initialData: { // The initial data for the form fields
-      id: number,
-      name: string
-  },
+  formAction: any; // The action to perform when the form is submitted
+  initialData: {
+    // The initial data for the form fields
+    id: number;
+    name: string;
+  };
 }
 
-export default function UpdateForm({ formAction, initialData }: UpdateFormProps) {
+export default function UpdateForm({
+  formAction,
+  initialData,
+}: UpdateFormProps) {
   const [formState, action] = useFormState<FormState>(formAction, {
     errors: {},
   });
-  
+
   return (
     <form action={action}>
       <input type="hidden" name="id" defaultValue={initialData.id} />
@@ -38,7 +42,8 @@ export default function UpdateForm({ formAction, initialData }: UpdateFormProps)
           Name
         </label>
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline min-w-[300px]"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+            leading-tight focus:outline-none focus:shadow-outline min-w-[300px]"
           id="name"
           name="name"
           type="text"
