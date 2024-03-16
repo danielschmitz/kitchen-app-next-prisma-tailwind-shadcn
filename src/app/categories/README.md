@@ -23,6 +23,7 @@
 - form.tsx que usa  useFormState para saber o estado do formulario e o page.tsx pode retornar os erros
 - form.tsx tambem usa o  useFormStatus para controlar o loading do botao de submit
 
+- error.tsx do delete verifica de categoria pode ser deletada, caso tenha produtos
 
 A dinamica do edit é assim. Page.tsx é use server e adiciona um  client que pode  chamar o server
 
