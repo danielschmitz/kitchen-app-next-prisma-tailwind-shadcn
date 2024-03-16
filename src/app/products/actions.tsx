@@ -5,7 +5,9 @@ import { redirect } from "next/navigation";
 
 const prisma = new PrismaClient();
 
-export async function FindProducts(): Promise<Product[]> {
+type ProductWithCategory = Product & { category: Category };
+
+export async function FindProducts(): Promise<ProductWithCategory[]> {
   return await prisma.product.findMany({
     include: { category: true },
   });
