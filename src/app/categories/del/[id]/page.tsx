@@ -1,5 +1,5 @@
 import Submit from "@/app/categories/Submit";
-import { PrismaClient } from "@prisma/client";
+import { Category, PrismaClient, Product } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 interface PageParams {
@@ -8,14 +8,31 @@ interface PageParams {
   };
 }
 
-export default async function page ({ params }: PageParams) {
-  async function saveCategory(formData: FormData) {
+interface CategoryWithProducts extends Category {
+  products: Product[];
+}
+
+export default async function page({ params }: PageParams) {
+  async function deleteCategory(formData: FormData) {
     "use server";
     const formObject = Object.fromEntries(formData);
+    const id = formObject.id as string;
     const prisma = new PrismaClient();
+
+    const myCategory: CategoryWithProducts =
+      await prisma.category.findFirstOrThrow({
+        where: { id },
+        include: { products: true },
+      });
+      
+    if (myCategory.products.length > 0) {
+      throw new Error("Cannot delete a category that has products");
+    }
+
     await prisma.category.delete({
-      where: { id: formObject.id as string },
+      where: { id },
     });
+
     redirect("/categories");
   }
 
@@ -26,10 +43,7 @@ export default async function page ({ params }: PageParams) {
   return (
     <div>
       <div className="flex flex-row w-full">
-        <form
-          className=""
-          action={saveCategory}
-        >
+        <form className="" action={deleteCategory}>
           <input type="hidden" name="id" defaultValue={category.id} />
 
           <div className="flex items-center justify-between">
@@ -40,5 +54,4 @@ export default async function page ({ params }: PageParams) {
       </div>
     </div>
   );
-};
-
+}
