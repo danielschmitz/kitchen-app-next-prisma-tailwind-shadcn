@@ -1,4 +1,4 @@
-import Submit from "@/components/Submit";
+import Submit from "@/app/categories/Submit";
 import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 

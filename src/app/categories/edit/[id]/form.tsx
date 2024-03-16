@@ -1,6 +1,6 @@
 "use client";
 
-import Submit from "@/components/Submit";
+import Submit from "@/app/categories/Submit";
 import { useFormState, useFormStatus } from "react-dom";
 
 // Form Errors interface
