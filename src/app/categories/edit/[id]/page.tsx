@@ -2,7 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import { redirect } from "next/navigation";
 import UpdateForm from "./form";
 
-export default async function page ({ params }: { params: { id: string } }) {
+interface PageParams {
+  params: {
+    id: string;
+  };
+}
+
+export default async function page ({ params }: PageParams) {
   async function saveCategory(formState: any, formData: FormData) {
     "use server";
     

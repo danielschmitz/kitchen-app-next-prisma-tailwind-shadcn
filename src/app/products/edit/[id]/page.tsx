@@ -1,9 +1,15 @@
 "use server";
 
-import ProductForm from "../../productform";
+import ProductForm from "../../ProductForm";
 import { FindCategories, FindProduct, UpdateProduct } from "../../actions";
 
-export default async function Page({ params }: { params: { id: string } }) {
+interface PageParams {
+  params: {
+    id: string;
+  };
+};
+
+export default async function Page({ params }: PageParams) {
   const categories = FindCategories();
   const product = await FindProduct(params.id);
 
