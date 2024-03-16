@@ -1,13 +1,9 @@
-'use client'
+"use client";
 
 import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 
-export default function Submit({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Submit({ children }: React.PropsWithChildren) {
   const status = useFormStatus();
   return (
     <Button

@@ -1,11 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-
-const page = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+export default function layout({ children }: React.PropsWithChildren) {
   return (
     <Card>
       <CardHeader>
@@ -14,6 +9,4 @@ const page = ({
       <CardContent>{children}</CardContent>
     </Card>
   );
-};
-
-export default page;
+}
