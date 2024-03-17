@@ -1,6 +1,10 @@
 "use server"
 
-import { PrismaClient, Product, Stock } from "@prisma/client";
+import { Category, PrismaClient, Product, Stock } from "@prisma/client";
+
+export interface CategoryWithProducts extends Category {
+    products: Product[]
+}
 
 const prisma = new PrismaClient();
 
@@ -10,6 +14,19 @@ export async function FindStock(): Promise<Stock[]> {
 
 export async function FindProducts(): Promise<Product[]> {
     return prisma.product.findMany();
+}
+
+export async function FindCategoriesWithProducts(): Promise<CategoryWithProducts[]> {
+    return prisma.category.findMany({
+        where: {
+            products: {
+                some: {}
+            }
+        },
+        include: {
+            products: true
+        }
+    })
 }
 
 export async function CreateStock(stock: Stock): Promise<Stock> {

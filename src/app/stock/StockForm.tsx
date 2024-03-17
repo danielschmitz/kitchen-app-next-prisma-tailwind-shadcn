@@ -20,7 +20,9 @@ import { useState } from "react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -31,9 +33,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
+import { Category, Product } from "@prisma/client";
+import { CategoryWithProducts } from "./actions";
 
 interface FormProps {
-  products?: any;
+  categoriesWithProducts?: CategoryWithProducts[];
   initialData?: any;
   action: any;
 }
@@ -46,7 +50,7 @@ const FormSchema = z.object({
 });
 
 export default function StockForm({
-  products,
+  categoriesWithProducts,
   initialData,
   action,
 }: FormProps) {
@@ -82,18 +86,31 @@ export default function StockForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Product:</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a product" />
                     </SelectTrigger>
                   </FormControl>
+
                   <SelectContent>
-                    {products.map((product: any) => (
-                      <SelectItem key={product.id} value={product.id}>
-                        {product.name}
-                      </SelectItem>
-                    ))}
+                    {categoriesWithProducts && categoriesWithProducts.map((category: CategoryWithProducts) => {
+                      return ( 
+                        <SelectGroup key={category.id}>
+                          <SelectLabel className="bg-secondary">
+                            {category.name}
+                          </SelectLabel>
+                          {category.products.map((product: Product) => (
+                            <SelectItem key={product.id} value={product.id}>
+                              {product.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
