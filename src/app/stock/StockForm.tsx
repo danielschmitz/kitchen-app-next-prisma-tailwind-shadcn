@@ -46,7 +46,7 @@ const FormSchema = z.object({
   productId: z.string(),
   price: z.coerce.number(),
   expires: z.date(),
-  quantity: z.number(),
+  quantity: z.coerce.number(),
 });
 
 export default function StockForm({
@@ -58,9 +58,9 @@ export default function StockForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       productId: initialData?.productId,
-      price: initialData?.price,
-      expires: initialData?.expires,
-      quantity: initialData?.quantity,
+      price: initialData?.price || 1.0,
+      expires: initialData?.expires || new Date(),
+      quantity: initialData?.quantity || 1,
     },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -72,6 +72,7 @@ export default function StockForm({
     }
     setIsSubmitting(false);
   }
+  
   return (
     <Form {...form}>
       <div className="text-md mb-5">Add Product to Stock</div>
@@ -125,9 +126,24 @@ export default function StockForm({
               <FormItem>
                 <FormLabel>Product Price:</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input type="number" {...field} />
                 </FormControl>
                 <FormDescription>Insert the product price</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Quantity:</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormDescription>How many items of this product will be added to stock?</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -172,7 +188,6 @@ export default function StockForm({
               </FormItem>
             )}
           />
-
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
           </Button>

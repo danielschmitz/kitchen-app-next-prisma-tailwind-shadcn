@@ -1,6 +1,7 @@
 "use server"
 
 import { Category, PrismaClient, Product, Stock } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 export interface CategoryWithProducts extends Category {
     products: Product[]
@@ -30,5 +31,6 @@ export async function FindCategoriesWithProducts(): Promise<CategoryWithProducts
 }
 
 export async function CreateStock(stock: Stock): Promise<Stock> {
-    return prisma.stock.create({data: stock});
+    await prisma.stock.create({data: stock});
+    redirect('/stock')
 }

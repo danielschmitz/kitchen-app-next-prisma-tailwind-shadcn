@@ -35,7 +35,7 @@ model Product {
 model Stock {
   id  String  @id @default(cuid())
   productId   String
-  price       String
+  price       Decimal
   expires     DateTime
   added       DateTime @default(now())
   quantity    Int
