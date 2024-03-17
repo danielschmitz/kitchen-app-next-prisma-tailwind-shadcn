@@ -82,7 +82,7 @@ export default function StockForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Product:</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value} {...field}>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a product" />

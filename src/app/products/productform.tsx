@@ -102,7 +102,7 @@ export default function ProductForm({ categories, initialData, action }: UpdateF
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
-                <Select onValueChange={field.onChange} {...field}>
+                <Select onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a category" />
