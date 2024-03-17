@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "create:db": "prisma db push",
+    "db:create": "prisma db push",
+    "db:studio": "prisma studio",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
