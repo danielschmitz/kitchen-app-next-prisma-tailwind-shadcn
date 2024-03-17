@@ -101,7 +101,7 @@ export default function StockForm({
             )}
           />
 
-          {/* <FormField
+          <FormField
             control={form.control}
             name="price"
             render={({ field }) => (
@@ -114,9 +114,9 @@ export default function StockForm({
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
 
-          {/* <FormField
+          <FormField
             control={form.control}
             name="expires"
             render={({ field }) => (
@@ -154,7 +154,7 @@ export default function StockForm({
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
 
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Saving..." : "Save"}
