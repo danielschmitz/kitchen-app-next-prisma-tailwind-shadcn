@@ -7,9 +7,13 @@ export interface CategoryWithProducts extends Category {
     products: Product[]
 }
 
+export interface StockWithProduct extends Stock {
+    product: Product
+}
+
 const prisma = new PrismaClient();
 
-export async function FindStock(): Promise<Stock[]> {
+export async function FindStock(): Promise<StockWithProduct[]> {
     return prisma.stock.findMany({include: {product: true}});
 };
 
