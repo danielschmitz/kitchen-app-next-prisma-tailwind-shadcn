@@ -22,13 +22,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,7 +50,7 @@ export function DataTableStock<TData, TValue>({
     []
   );
   const [columnVisibility, setColumnVisibility] =
-  React.useState<VisibilityState>({})
+    React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -64,22 +65,17 @@ export function DataTableStock<TData, TValue>({
     state: {
       sorting,
       columnFilters,
-      columnVisibility
+      columnVisibility,
     },
   });
 
-    return (
+  return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter products..."
-          value={(table.getColumn("product_name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("product_name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-         <DropdownMenu>
+      <div className="flex items-center py-4 gap-2">
+        <Button>
+          <Link href="/stock/new">New Stock</Link>
+        </Button>
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns
@@ -88,9 +84,7 @@ export function DataTableStock<TData, TValue>({
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -103,10 +97,20 @@ export function DataTableStock<TData, TValue>({
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
-                )
+                );
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        <Input
+          placeholder="Filter products..."
+          value={
+            (table.getColumn("product_name")?.getFilterValue() as string) ?? ""
+          }
+          onChange={(event) =>
+            table.getColumn("product_name")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
       </div>
       <div className="rounded-md border">
         <Table>
