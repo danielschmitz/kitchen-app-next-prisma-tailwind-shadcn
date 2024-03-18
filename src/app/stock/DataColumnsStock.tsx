@@ -75,7 +75,12 @@ export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
         month: "2-digit",
         day: "2-digit",
       }).format(value);
-      return <div className="text-right font-medium">{formatted}</div>;
+      const thirtyDaysFromNow = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
+      const thirtyDaysAgo = new Date(Date.now() - 1000 * 60 * 60 * 24 * 30);
+      const isNearExpiration = thirtyDaysAgo < new Date(formatted) && new Date(formatted) < thirtyDaysFromNow;
+
+
+      return <div className="text-right font-medium" style={{ color: isNearExpiration ? "red" : "black" }}>{formatted}</div>;
     },
   },
   {
