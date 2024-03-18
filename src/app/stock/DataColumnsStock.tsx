@@ -4,11 +4,22 @@ import { ColumnDef } from "@tanstack/react-table";
 import { StockWithProduct } from "./actions";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ArrowUpDown } from "lucide-react";
 
 export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
   {
     accessorKey: "product.name",
-    header: "Product",
+    header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Produto
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
   },
   {
     accessorKey: "quantity",
@@ -46,7 +57,17 @@ export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
   },
   {
     accessorKey: "expires",
-    header: () => <div className="text-right">Expires</div>,
+    header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Expires
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
     cell: ({ row }) => {
       const value = row.getValue("expires") as Date;
       const formatted = new Intl.DateTimeFormat("en-US", {
