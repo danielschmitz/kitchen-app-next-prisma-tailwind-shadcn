@@ -2,11 +2,13 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { StockWithProduct } from "./actions";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
   {
     accessorKey: "product.name",
-    header: "Product"
+    header: "Product",
   },
   {
     accessorKey: "quantity",
@@ -20,14 +22,14 @@ export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
     accessorKey: "added",
     header: () => <div className="text-right">Added</div>,
     cell: ({ row }) => {
-        const value = row.getValue("added") as Date;
-        const formatted = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).format(value);
-        return <div className="text-right font-medium">{formatted}</div>;
-      },
+      const value = row.getValue("added") as Date;
+      const formatted = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(value);
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
   },
   {
     accessorKey: "price",
@@ -46,13 +48,27 @@ export const DataColumnsStock: ColumnDef<StockWithProduct>[] = [
     accessorKey: "expires",
     header: () => <div className="text-right">Expires</div>,
     cell: ({ row }) => {
-        const value = row.getValue("expires") as Date;
-        const formatted = new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).format(value);
-        return <div className="text-right font-medium">{formatted}</div>;
-      },
+      const value = row.getValue("expires") as Date;
+      const formatted = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(value);
+      return <div className="text-right font-medium">{formatted}</div>;
+    },
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const idStock = row.original.id;
+      return (
+        <div className="text-right font-medium">
+          <Button variant="ghost">
+            <Link href={`/stock/edit/${idStock}`}>Edit</Link>
+          </Button>
+        </div>
+      );
+    },
   },
 ];
