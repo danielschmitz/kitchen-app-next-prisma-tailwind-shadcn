@@ -43,6 +43,7 @@ interface FormProps {
 }
 
 const FormSchema = z.object({
+  id: z.string().optional(),
   productId: z.string(),
   price: z.coerce.number(),
   expires: z.date(),
@@ -57,6 +58,7 @@ export default function StockForm({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      id: initialData?.id,
       productId: initialData?.productId,
       price: initialData?.price || 1.0,
       expires: initialData?.expires || new Date(),

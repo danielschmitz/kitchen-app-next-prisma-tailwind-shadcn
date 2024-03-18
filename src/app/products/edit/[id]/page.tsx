@@ -10,7 +10,7 @@ interface PageParams {
 };
 
 export default async function Page({ params }: PageParams) {
-  const categories = FindCategories();
+  const categories = await FindCategories();
   const product = await FindProduct(params.id);
 
   return (

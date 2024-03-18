@@ -31,6 +31,7 @@ interface UpdateFormProps {
 }
 
 const FormSchema = z.object({
+  id: z.string().optional(),
   name: z
     .string()
     .min(2, {
@@ -47,6 +48,7 @@ export default function ProductForm({ categories, initialData, action }: UpdateF
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      id: initialData?.id,
       name: initialData?.name,
       supplier: initialData?.supplier,
       categoryId: initialData?.categoryId
@@ -102,7 +104,7 @@ export default function ProductForm({ categories, initialData, action }: UpdateF
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} {...field}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a category" />
