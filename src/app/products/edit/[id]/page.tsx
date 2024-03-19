@@ -1,6 +1,6 @@
 "use server";
 
-import ProductForm from "../../ProductForm";
+import ProductForm from "@/app/products/ProductForm";
 import { FindCategories, FindProduct, UpdateProduct } from "../../actions";
 
 interface PageParams {

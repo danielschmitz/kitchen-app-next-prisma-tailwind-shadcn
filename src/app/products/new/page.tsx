@@ -1,7 +1,6 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
-import ProductForm from "../ProductForm";
+import ProductForm from "@/app/products/ProductForm";
 import { CreateProduct, FindCategories } from "../actions";
 
 export default async function Page() {
