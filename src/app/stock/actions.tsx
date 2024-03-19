@@ -14,7 +14,7 @@ export interface StockWithProduct extends Stock {
 const prisma = new PrismaClient();
 
 export async function FindStocks(): Promise<StockWithProduct[]> {
-  return prisma.stock.findMany({ include: { product: true } });
+  return prisma.stock.findMany({ where: { quantity: { gt: 0 } },  include: { product: true } });
 }
 
 export async function FindStock(id: string): Promise<Stock> {
