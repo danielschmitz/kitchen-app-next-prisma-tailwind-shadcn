@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Topheader from "@/components/Topheader";
+import TopHeader from "@/components/TopHeader";
 import { Toaster } from "@/components/ui/toaster";
 import { PropsWithChildren } from "react";
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Topheader title="Kicthen's Next App"></Topheader>
+        <TopHeader title="Kicthen's Next App"></TopHeader>
         <div className="px-5 py-2">{children}</div>
         <Toaster />
       </body>
