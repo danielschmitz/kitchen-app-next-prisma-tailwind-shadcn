@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 
-export default function TopHeader(props: { title: string }) {
+export default function Header(props: { title: string }) {
   return (
     <div
       className="bg-black text-slate-50 
