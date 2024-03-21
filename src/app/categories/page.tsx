@@ -1,7 +1,7 @@
-import { Category, PrismaClient } from "@prisma/client";
-import Link from "next/link";
+import { Category, PrismaClient } from '@prisma/client'
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -9,13 +9,12 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  TableRow
+} from '@/components/ui/table'
 
-export default async function page()  {
-
-  const prisma = new PrismaClient();
-  const categories = await prisma.category.findMany();
+export default async function page() {
+  const prisma = new PrismaClient()
+  const categories = await prisma.category.findMany()
 
   return (
     <div>
@@ -50,5 +49,5 @@ export default async function page()  {
         <Link href="/categories/new">New Category</Link>
       </Button>
     </div>
-  );
-};
+  )
+}

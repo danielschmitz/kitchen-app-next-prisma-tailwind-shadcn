@@ -1,17 +1,17 @@
-import { PrismaClient } from "@prisma/client";
-import { redirect } from "next/navigation";
-import UpdateForm from "./form";
+import { PrismaClient } from '@prisma/client'
+import { redirect } from 'next/navigation'
+import UpdateForm from './form'
 
 interface PageParams {
   params: {
-    id: string;
-  };
+    id: string
+  }
 }
 
-export default async function page ({ params }: PageParams) {
+export default async function page({ params }: PageParams) {
   async function saveCategory(formState: any, formData: FormData) {
-    "use server";
-    
+    'use server'
+
     const id = formData.get('id')
     const name = formData.get('name')
 
@@ -19,31 +19,30 @@ export default async function page ({ params }: PageParams) {
     if (!formData.get('name')) {
       return {
         errors: {
-          name: 'Name is required',
-        },
-      };
+          name: 'Name is required'
+        }
+      }
     }
 
     // mutate data
-    const prisma = new PrismaClient();
+    const prisma = new PrismaClient()
     await prisma.category.update({
       where: { id: id as string },
-      data: { name: name as string },
-    });
+      data: { name: name as string }
+    })
 
-    redirect("/categories");
+    redirect('/categories')
   }
 
-  const  id  = params.id;
-  const prisma = new PrismaClient();
-  const category = await prisma.category.findUniqueOrThrow({ where: { id } });
+  const id = params.id
+  const prisma = new PrismaClient()
+  const category = await prisma.category.findUniqueOrThrow({ where: { id } })
 
   return (
     <div>
       <div className="flex flex-row w-full">
-          <UpdateForm formAction={saveCategory} initialData={category} />
+        <UpdateForm formAction={saveCategory} initialData={category} />
       </div>
     </div>
-  );
-};
-
+  )
+}

@@ -1,17 +1,13 @@
-"use client";
+'use client'
 
-import { useFormStatus } from "react-dom";
-import { Button } from "../../components/ui/button";
+import { useFormStatus } from 'react-dom'
+import { Button } from '../../components/ui/button'
 
 export default function Submit({ children }: React.PropsWithChildren) {
-  const status = useFormStatus();
+  const status = useFormStatus()
   return (
-    <Button
-      type="submit"
-      disabled={status.pending}
-      aria-disabled={status.pending}
-    >
+    <Button type="submit" disabled={status.pending} aria-disabled={status.pending}>
       {children}
     </Button>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormState } from "react-hook-form";
-import { z } from "zod";
-import { format } from "date-fns";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, useFormState } from 'react-hook-form'
+import { z } from 'zod'
+import { format } from 'date-fns'
+import { CalendarIcon } from '@radix-ui/react-icons'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -13,10 +13,10 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useState } from 'react'
 import {
   Select,
   SelectContent,
@@ -24,22 +24,18 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
-import { Category, Product } from "@prisma/client";
-import { CategoryWithProducts } from "./actions";
+  SelectValue
+} from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { cn } from '@/lib/utils'
+import { Calendar } from '@/components/ui/calendar'
+import { Category, Product } from '@prisma/client'
+import { CategoryWithProducts } from './actions'
 
 interface FormProps {
-  categoriesWithProducts?: CategoryWithProducts[];
-  initialData?: any;
-  action: any;
+  categoriesWithProducts?: CategoryWithProducts[]
+  initialData?: any
+  action: any
 }
 
 const FormSchema = z.object({
@@ -47,14 +43,10 @@ const FormSchema = z.object({
   productId: z.string(),
   price: z.coerce.number(),
   expires: z.date(),
-  quantity: z.coerce.number(),
-});
+  quantity: z.coerce.number()
+})
 
-export default function StockForm({
-  categoriesWithProducts,
-  initialData,
-  action,
-}: FormProps) {
+export default function StockForm({ categoriesWithProducts, initialData, action }: FormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -62,37 +54,31 @@ export default function StockForm({
       productId: initialData?.productId,
       price: initialData?.price || 1.0,
       expires: initialData?.expires || new Date(),
-      quantity: initialData?.quantity || 1,
-    },
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+      quantity: initialData?.quantity || 1
+    }
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     if (action) {
-      await action(data);
+      await action(data)
     }
-    setIsSubmitting(false);
+    setIsSubmitting(false)
   }
-  
+
   return (
     <Form {...form}>
       <div className="text-md mb-5">Add Product to Stock</div>
       <div className="m-5">
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
           <FormField
             control={form.control}
             name="productId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Product:</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a product" />
@@ -100,20 +86,19 @@ export default function StockForm({
                   </FormControl>
 
                   <SelectContent>
-                    {categoriesWithProducts && categoriesWithProducts.map((category: CategoryWithProducts) => {
-                      return ( 
-                        <SelectGroup key={category.id}>
-                          <SelectLabel className="bg-secondary">
-                            {category.name}
-                          </SelectLabel>
-                          {category.products.map((product: Product) => (
-                            <SelectItem key={product.id} value={product.id}>
-                              {product.name}
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
-                      );
-                    })}
+                    {categoriesWithProducts &&
+                      categoriesWithProducts.map((category: CategoryWithProducts) => {
+                        return (
+                          <SelectGroup key={category.id}>
+                            <SelectLabel className="bg-secondary">{category.name}</SelectLabel>
+                            {category.products.map((product: Product) => (
+                              <SelectItem key={product.id} value={product.id}>
+                                {product.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        )
+                      })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -145,7 +130,9 @@ export default function StockForm({
                 <FormControl>
                   <Input type="number" {...field} />
                 </FormControl>
-                <FormDescription>How many items of this product will be added to stock?</FormDescription>
+                <FormDescription>
+                  How many items of this product will be added to stock?
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -162,17 +149,13 @@ export default function StockForm({
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
-                        variant={"outline"}
+                        variant={'outline'}
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          'w-[240px] pl-3 text-left font-normal',
+                          !field.value && 'text-muted-foreground'
                         )}
                       >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
+                        {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -191,10 +174,10 @@ export default function StockForm({
             )}
           />
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? 'Saving...' : 'Save'}
           </Button>
         </form>
       </div>
     </Form>
-  );
+  )
 }

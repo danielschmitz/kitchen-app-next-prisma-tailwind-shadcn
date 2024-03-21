@@ -1,8 +1,8 @@
-"use server";
+'use server'
 
-import { PrismaClient } from "@prisma/client";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { PrismaClient } from '@prisma/client'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableBody,
@@ -10,23 +10,23 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  TableRow
+} from '@/components/ui/table'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
-import { redirect } from "next/navigation";
-import DeleteDialog from "./DeleteDialog";
-import { FindProducts } from "./actions";
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
+import { MoreHorizontal } from 'lucide-react'
+import { redirect } from 'next/navigation'
+import DeleteDialog from './DeleteDialog'
+import { FindProducts } from './actions'
 
 export default async function page() {
-  const products =  await FindProducts()
+  const products = await FindProducts()
 
   return (
     <div>
@@ -62,7 +62,7 @@ export default async function page() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
-                      <Button variant={"ghost"}>
+                      <Button variant={'ghost'}>
                         <Link href={`/products/edit/${product.id}`}>Edit</Link>
                       </Button>
                       <DeleteDialog product={product} />
@@ -79,5 +79,5 @@ export default async function page() {
         <Link href="/products/new">New product</Link>
       </Button>
     </div>
-  );
+  )
 }

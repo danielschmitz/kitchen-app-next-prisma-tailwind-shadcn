@@ -1,41 +1,35 @@
-"use client";
+'use client'
 
-import Submit from "@/app/categories/Submit";
-import { useFormState, useFormStatus } from "react-dom";
+import Submit from '@/app/categories/Submit'
+import { useFormState, useFormStatus } from 'react-dom'
 
 // Form Errors interface
 interface FormErrors {
-  name?: string;
+  name?: string
 }
 
 interface FormState {
-  errors: FormErrors;
+  errors: FormErrors
 }
 
 interface UpdateFormProps {
-  formAction: any; 
+  formAction: any
   initialData: {
-    id: string;
-    name: string;
-  };
+    id: string
+    name: string
+  }
 }
 
-export default function UpdateForm({
-  formAction,
-  initialData,
-}: UpdateFormProps) {
+export default function UpdateForm({ formAction, initialData }: UpdateFormProps) {
   const [formState, action] = useFormState<FormState>(formAction, {
-    errors: {},
-  });
+    errors: {}
+  })
 
   return (
     <form action={action}>
       <input type="hidden" name="id" defaultValue={initialData.id} />
       <div className="mb-4">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="name"
-        >
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
           Name
         </label>
         <input
@@ -55,5 +49,5 @@ export default function UpdateForm({
         <Submit>Save</Submit>
       </div>
     </form>
-  );
+  )
 }

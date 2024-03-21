@@ -1,33 +1,32 @@
-import Submit from "@/app/categories/Submit";
-import { PrismaClient } from "@prisma/client";
-import { redirect } from "next/navigation";
+import Submit from '@/app/categories/Submit'
+import { PrismaClient } from '@prisma/client'
+import { redirect } from 'next/navigation'
 
 export default async function page() {
   async function createCategory(formData: FormData) {
-    "use server";
+    'use server'
 
-    const formObject = Object.fromEntries(formData);
+    const formObject = Object.fromEntries(formData)
 
     if (!formObject.name) {
-      throw new Error("Name is required");
+      throw new Error('Name is required')
     }
 
-    const prisma = new PrismaClient();
-    await prisma.category.create({data:{name:formObject.name as string}})
-    
+    const prisma = new PrismaClient()
+    await prisma.category.create({
+      data: {
+        name: formObject.name as string
+      }
+    })
+
     redirect('/categories')
   }
   return (
     <div>
       <div className="flex flex-row w-full">
-        <form
-          action={createCategory}
-        >
+        <form action={createCategory}>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="name"
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
               Name
             </label>
             <input
@@ -39,10 +38,10 @@ export default async function page() {
             />
           </div>
           <div className="flex items-center justify-between">
-           <Submit>Save</Submit>
+            <Submit>Save</Submit>
           </div>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PropsWithChildren } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { PropsWithChildren } from 'react'
 
-export default function layout ({ children }: PropsWithChildren) {
+export default function layout({ children }: PropsWithChildren) {
   return (
     <Card>
       <CardHeader>
@@ -9,5 +9,5 @@ export default function layout ({ children }: PropsWithChildren) {
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
-  );
-};
+  )
+}

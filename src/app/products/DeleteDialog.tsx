@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   AlertDialog,
@@ -9,13 +9,13 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 
-import { PrismaClient, Product } from "@prisma/client";
-import { redirect } from "next/navigation";
-import { DeleteProduct } from "./actions";
+import { PrismaClient, Product } from '@prisma/client'
+import { redirect } from 'next/navigation'
+import { DeleteProduct } from './actions'
 
 export default function DeleteDialog({ product }: { product: Product }) {
   return (
@@ -32,7 +32,7 @@ export default function DeleteDialog({ product }: { product: Product }) {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={async () => {
-              DeleteProduct(product.id);
+              DeleteProduct(product.id)
             }}
           >
             Continue
@@ -40,5 +40,5 @@ export default function DeleteDialog({ product }: { product: Product }) {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
+  )
 }

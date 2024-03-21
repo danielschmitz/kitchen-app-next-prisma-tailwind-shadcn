@@ -1,20 +1,17 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/Header";
-import { Toaster } from "@/components/ui/toaster";
-import { PropsWithChildren } from "react";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+import Header from '@/components/Header'
+import { Toaster } from '@/components/ui/toaster'
+import { PropsWithChildren } from 'react'
 
-
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Stock Control System",
-};
+  title: 'Stock Control System'
+}
 
-export default function RootLayout({
-  children,
-}: PropsWithChildren) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -23,5 +20,5 @@ export default function RootLayout({
         <Toaster />
       </body>
     </html>
-  );
+  )
 }

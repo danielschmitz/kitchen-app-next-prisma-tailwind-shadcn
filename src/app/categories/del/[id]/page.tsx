@@ -1,44 +1,43 @@
-import Submit from "@/app/categories/Submit";
-import { Category, PrismaClient, Product } from "@prisma/client";
-import { redirect } from "next/navigation";
+import Submit from '@/app/categories/Submit'
+import { Category, PrismaClient, Product } from '@prisma/client'
+import { redirect } from 'next/navigation'
 
 interface PageParams {
   params: {
-    id: string;
-  };
+    id: string
+  }
 }
 
 interface CategoryWithProducts extends Category {
-  products: Product[];
+  products: Product[]
 }
 
 export default async function page({ params }: PageParams) {
   async function deleteCategory(formData: FormData) {
-    "use server";
-    const formObject = Object.fromEntries(formData);
-    const id = formObject.id as string;
-    const prisma = new PrismaClient();
+    'use server'
+    const formObject = Object.fromEntries(formData)
+    const id = formObject.id as string
+    const prisma = new PrismaClient()
 
-    const myCategory: CategoryWithProducts =
-      await prisma.category.findFirstOrThrow({
-        where: { id },
-        include: { products: true },
-      });
-      
+    const myCategory: CategoryWithProducts = await prisma.category.findFirstOrThrow({
+      where: { id },
+      include: { products: true }
+    })
+
     if (myCategory.products.length > 0) {
-      throw new Error("Cannot delete a category that has products");
+      throw new Error('Cannot delete a category that has products')
     }
 
     await prisma.category.delete({
-      where: { id },
-    });
+      where: { id }
+    })
 
-    redirect("/categories");
+    redirect('/categories')
   }
 
-  const id = params.id;
-  const prisma = new PrismaClient();
-  const category = await prisma.category.findUniqueOrThrow({ where: { id } });
+  const id = params.id
+  const prisma = new PrismaClient()
+  const category = await prisma.category.findUniqueOrThrow({ where: { id } })
 
   return (
     <div>
@@ -53,5 +52,5 @@ export default async function page({ params }: PageParams) {
         </form>
       </div>
     </div>
-  );
+  )
 }

@@ -25,4 +25,3 @@ o productform usa o form do shadcn e do react hook form e a validacao com zod
 tanto new quanto edit chamam o productform
 
 categories/edit e categories/del e products/edit possuem o slug [id] e a interface PageParams que pode ser gobal, tipo um PageParamsWithId.
-

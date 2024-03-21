@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useFormState } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, useFormState } from 'react-hook-form'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -11,23 +11,22 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { useState } from 'react'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+  SelectValue
+} from '@/components/ui/select'
 
 interface UpdateFormProps {
-  categories?: any;
-  initialData?: any;
-  action:any
+  categories?: any
+  initialData?: any
+  action: any
 }
 
 const FormSchema = z.object({
@@ -35,14 +34,14 @@ const FormSchema = z.object({
   name: z
     .string()
     .min(2, {
-      message: "Name must be at least 2 characters.",
+      message: 'Name must be at least 2 characters.'
     })
     .max(50, {
-      message: "Name must be less than 50 characters.",
+      message: 'Name must be less than 50 characters.'
     }),
   supplier: z.string().optional(),
-  categoryId: z.string(),
-});
+  categoryId: z.string()
+})
 
 export default function ProductForm({ categories, initialData, action }: UpdateFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -52,25 +51,22 @@ export default function ProductForm({ categories, initialData, action }: UpdateF
       name: initialData?.name,
       supplier: initialData?.supplier,
       categoryId: initialData?.categoryId
-    },
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+    }
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     if (action) {
-      await action(data);
+      await action(data)
     }
-    setIsSubmitting(false);
+    setIsSubmitting(false)
   }
   return (
     <Form {...form}>
       <div className="text-md mb-5">Create product</div>
       <div className="m-5">
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full space-y-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
           <FormField
             control={form.control}
             name="name"
@@ -123,10 +119,10 @@ export default function ProductForm({ categories, initialData, action }: UpdateF
             )}
           />
           <Button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save"}
+            {isSubmitting ? 'Saving...' : 'Save'}
           </Button>
         </form>
       </div>
     </Form>
-  );
+  )
 }
